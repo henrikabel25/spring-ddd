@@ -9,6 +9,7 @@ public enum ErrorCode {
 
     USER_NAME_NULL(1000, "error.user.name.null"),
     USER_PASSWORD_NULL(1001, "error.user.password.null"),
+    USER_NOT_FOUND(1002, "error.user.notFound"),
 
     ROLE_CODE_NULL(1100, "error.role.code.null"),
     ROLE_NAME_NULL(1101, "error.role.name.null"),
