@@ -41,8 +41,9 @@ public class SysUserPostController {
     @PostMapping("/batch")
     public Mono<ApiResponse> batchSave(@RequestBody Map<String, Object> body) {
         Long userId = Long.valueOf(body.get("userId").toString());
-        @SuppressWarnings("unchecked")
-        List<Long> postIds = (List<Long>) body.get("postIds");
+        List<?> rawPostIds = (List<?>) body.get("postIds");
+        List<Long> postIds = rawPostIds == null ? List.of()
+                : rawPostIds.stream().map(o -> Long.valueOf(o.toString())).toList();
         return ApiResponse.ok(sysUserPostCommandService.batchSave(userId, postIds));
     }
 }
