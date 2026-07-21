@@ -67,6 +67,7 @@ public class SysMenuCommandService {
                             .doFinally(signalType -> reactiveRedisCacheHelper
                                     .deleteCache("user:*:menuWithPermissions")
                                     .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"))
+                                    .then(reactiveRedisCacheHelper.deleteCache("auth:user:detail:*").onErrorResume(e -> Mono.empty()))
                                     .subscribe());
                 });
     }
@@ -93,7 +94,7 @@ public class SysMenuCommandService {
                                         Menu menu = new Menu(command.getPath(), command.getComponent(), command.getAffixTab(), command.getNoBasicLayout(), command.getEmbedded());
                                         Button button = (command.getMenuType() != null && command.getMenuType() == 3)
                                                 ? new Button(command.getPermission(), command.getApi())
-                                                : null;
+                                                : domain.getButton();
                                         MenuExtendInfo menuExtendInfo = new MenuExtendInfo(
                                                 command.getOrder(),
                                                 command.getTitle(),
@@ -114,6 +115,7 @@ public class SysMenuCommandService {
                                                 .doFinally(signalType -> reactiveRedisCacheHelper
                                                         .deleteCache("user:*:menuWithPermissions")
                                                         .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"))
+                                                        .then(reactiveRedisCacheHelper.deleteCache("auth:user:detail:*").onErrorResume(e -> Mono.empty()))
                                                         .subscribe());
                                     }));
                         } else {
@@ -121,7 +123,7 @@ public class SysMenuCommandService {
                             Menu menu = new Menu(command.getPath(), command.getComponent(), command.getAffixTab(), command.getNoBasicLayout(), command.getEmbedded());
                             Button button = (command.getMenuType() != null && command.getMenuType() == 3)
                                     ? new Button(command.getPermission(), command.getApi())
-                                    : null;
+                                    : domain.getButton();
                             MenuExtendInfo menuExtendInfo = new MenuExtendInfo(
                                     command.getOrder(),
                                     command.getTitle(),
@@ -138,6 +140,7 @@ public class SysMenuCommandService {
                                     .doFinally(signalType -> reactiveRedisCacheHelper
                                             .deleteCache("user:*:menuWithPermissions")
                                             .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"))
+                                            .then(reactiveRedisCacheHelper.deleteCache("auth:user:detail:*").onErrorResume(e -> Mono.empty()))
                                             .subscribe());
                         }
                     });

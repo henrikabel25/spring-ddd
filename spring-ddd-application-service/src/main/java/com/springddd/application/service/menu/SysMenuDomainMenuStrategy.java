@@ -20,6 +20,8 @@ public class SysMenuDomainMenuStrategy implements SysMenuDomainStrategy {
 
         domain.setMenu(m);
 
+        domain.setButton(button);
+
         MenuExtendInfo extendInfo = new MenuExtendInfo(menuExtendInfo.order(), menuExtendInfo.title(), menuExtendInfo.icon(), menuExtendInfo.menuType(), menuExtendInfo.visible(), menuExtendInfo.menuStatus());
         domain.setMenuExtendInfo(extendInfo);
         return domain;

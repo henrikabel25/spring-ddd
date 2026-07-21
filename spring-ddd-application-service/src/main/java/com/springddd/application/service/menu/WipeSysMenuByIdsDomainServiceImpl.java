@@ -46,7 +46,8 @@ public class WipeSysMenuByIdsDomainServiceImpl implements WipeSysMenuByIdsDomain
                     List<Long> allIds = DeleteSysMenuByIdDomainServiceImpl.collectDescendantIds(allMenus, ids);
                     return deleteInBatches(allIds)
                             .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithPermissions"))
-                            .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"));
+                            .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"))
+                            .then(reactiveRedisCacheHelper.deleteCache("auth:user:detail:*").onErrorResume(e -> Mono.empty()));
                 });
     }
 
