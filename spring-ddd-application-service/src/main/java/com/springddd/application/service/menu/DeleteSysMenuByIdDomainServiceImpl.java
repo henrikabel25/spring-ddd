@@ -44,7 +44,8 @@ public class DeleteSysMenuByIdDomainServiceImpl implements DeleteSysMenuByIdDoma
                     List<Long> allIds = collectDescendantIds(activeMenus, ids);
                     return updateDeleteStatusInBatches(allIds, true)
                             .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithPermissions"))
-                            .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"));
+                            .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"))
+                            .then(reactiveRedisCacheHelper.deleteCache("auth:user:detail:*").onErrorResume(e -> Mono.empty()));
                 });
     }
 

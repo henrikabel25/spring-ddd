@@ -35,9 +35,8 @@ public class SysMenuDomainRepositoryImpl implements SysMenuDomainRepository {
             Menu menu = new Menu(e.getPath(), e.getComponent(), e.getAffixTab(), e.getNoBasicLayout(), e.getEmbedded());
             sysMenuDomain.setMenu(menu);
 
-            if (e.getMenuType() != null && e.getMenuType() == 3) {
-                Button button = new Button(e.getPermission(), e.getApi());
-                sysMenuDomain.setButton(button);
+            if (e.getPermission() != null || e.getApi() != null) {
+                sysMenuDomain.setButton(new Button(e.getPermission(), e.getApi()));
             }
 
             MenuExtendInfo menuExtendInfo = new MenuExtendInfo(e.getSortOrder(), e.getTitle(), e.getIcon(), e.getMenuType(), e.getVisible(), e.getMenuStatus());

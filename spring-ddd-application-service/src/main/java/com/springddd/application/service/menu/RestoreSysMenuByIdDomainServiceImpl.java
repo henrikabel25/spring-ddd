@@ -40,7 +40,8 @@ public class RestoreSysMenuByIdDomainServiceImpl implements RestoreSysMenuByIdDo
                     List<Long> allIds = DeleteSysMenuByIdDomainServiceImpl.collectDescendantIds(deletedMenus, ids);
                     return updateDeleteStatusInBatches(allIds, false)
                             .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithPermissions"))
-                            .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"));
+                            .then(reactiveRedisCacheHelper.deleteCache("user:*:menuWithoutPermissions"))
+                            .then(reactiveRedisCacheHelper.deleteCache("auth:user:detail:*").onErrorResume(e -> Mono.empty()));
                 });
     }
 
